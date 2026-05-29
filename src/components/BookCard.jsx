@@ -1,29 +1,59 @@
-function BookCard({ book }) {
-  const coverUrl = book.cover_i
-    ? `https://covers.openlibrary.org/b/id/${book.cover_i}-M.jpg`
-    : "https://via.placeholder.com/180x260?text=No+Cover";
+import RatingStars from "./RatingStars";
+import Badge from "./Badge";
+import { coverUrl, authorList } from "../utils/format";
+
+function BookCard({ book, showAvailability, onSelect }) {
+  const cover = coverUrl(book, "M");
 
   return (
-    <article className="book-card">
-      <img src={coverUrl} alt={book.title} />
+    <article
+      className="card"
+      onClick={() => onSelect(book)}
+      onKeyDown={(event) => {
+        if (event.key === "Enter") onSelect(book);
+      }}
+      role="button"
+      tabIndex={0}
+    >
+      <div className="card__cover">
+        {showAvailability ? <Badge book={book} /> : null}
 
-      <div className="book-info">
-        <h2>{book.title}</h2>
+        {cover ? (
+          <img src={cover} alt={`Cover of ${book.title}`} loading="lazy" />
+        ) : (
+          <div className="card__cover--empty">
+            <span>{book.title}</span>
+          </div>
+        )}
+      </div>
 
-        <p>
-          <strong>Autor:</strong>{" "}
-          {book.author_name ? book.author_name.join(", ") : "No disponible"}
+      <div className="card__body">
+        <h3 className="card__title">{book.title}</h3>
+
+        <p className="card__author">
+          <span className="card__avatar" aria-hidden="true" />
+          <em>{authorList(book, 2)}</em>
         </p>
 
-        <p>
-          <strong>Año:</strong>{" "}
-          {book.first_publish_year || "No disponible"}
-        </p>
+        <div className="card__meta">
+          {book.ratings_average ? (
+            <RatingStars value={book.ratings_average} count={book.ratings_count} />
+          ) : (
+            <span className="card__meta-muted">No ratings</span>
+          )}
 
-        <p>
-          <strong>Ediciones:</strong>{" "}
-          {book.edition_count || "No disponible"}
-        </p>
+          {book.first_publish_year ? (
+            <span className="tag">
+              <span className="tag__k">First</span> {book.first_publish_year}
+            </span>
+          ) : null}
+
+          {book.edition_count ? (
+            <span className="tag">
+              <span className="tag__k">Editions</span> {book.edition_count}
+            </span>
+          ) : null}
+        </div>
       </div>
     </article>
   );

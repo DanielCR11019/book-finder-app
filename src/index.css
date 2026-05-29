@@ -1,111 +1,107 @@
+/* ============================================================
+   Stacks — design tokens, reset & base typography
+   Aesthetic: editorial / library. Warm paper, deep maroon,
+   a serif display face (Spectral) paired with a grotesque
+   UI face (Archivo).
+   ============================================================ */
+
 :root {
-  --text: #6b6375;
-  --text-h: #08060d;
-  --bg: #fff;
-  --border: #e5e4e7;
-  --code-bg: #f4f3ec;
-  --accent: #aa3bff;
-  --accent-bg: rgba(170, 59, 255, 0.1);
-  --accent-border: rgba(170, 59, 255, 0.5);
-  --social-bg: rgba(244, 243, 236, 0.5);
-  --shadow:
-    rgba(0, 0, 0, 0.1) 0 10px 15px -3px, rgba(0, 0, 0, 0.05) 0 4px 6px -2px;
+  /* Paper & ink */
+  --paper:      #ece7da;   /* page background */
+  --paper-2:    #f4f0e6;   /* raised surfaces: inputs, cards-hover, modal */
+  --paper-3:    #e3ddcd;   /* recessed / track fills */
+  --ink:        #1c150f;   /* headings */
+  --ink-soft:   #6b6256;   /* meta, labels */
+  --ink-faint:  #968c7c;   /* hints, placeholders */
+  --line:       #d6cfbe;   /* hairlines & borders */
 
-  --sans: system-ui, 'Segoe UI', Roboto, sans-serif;
-  --heading: system-ui, 'Segoe UI', Roboto, sans-serif;
-  --mono: ui-monospace, Consolas, monospace;
+  /* Accent */
+  --accent:     #7c1d22;   /* deep maroon */
+  --accent-2:   #a13b3b;   /* lighter maroon for stars */
+  --accent-bg:  rgba(124, 29, 34, 0.08);
+  --accent-line:rgba(124, 29, 34, 0.22);
 
-  font: 18px/145% var(--sans);
-  letter-spacing: 0.18px;
-  color-scheme: light dark;
-  color: var(--text);
-  background: var(--bg);
-  font-synthesis: none;
-  text-rendering: optimizeLegibility;
+  --btn:        #211a13;   /* near-black search button */
+  --btn-hover:  #382c20;
+
+  --radius:     12px;
+  --radius-sm:  8px;
+  --shadow-1:   0 1px 2px rgba(28, 21, 15, 0.06);
+  --shadow-2:   0 18px 50px -18px rgba(28, 21, 15, 0.45);
+
+  --serif: "Spectral", Georgia, "Times New Roman", serif;
+  --sans:  "Archivo", system-ui, "Segoe UI", sans-serif;
+
+  color-scheme: light;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-
-  @media (max-width: 1024px) {
-    font-size: 16px;
-  }
+  text-rendering: optimizeLegibility;
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --text: #9ca3af;
-    --text-h: #f3f4f6;
-    --bg: #16171d;
-    --border: #2e303a;
-    --code-bg: #1f2028;
-    --accent: #c084fc;
-    --accent-bg: rgba(192, 132, 252, 0.15);
-    --accent-border: rgba(192, 132, 252, 0.5);
-    --social-bg: rgba(47, 48, 58, 0.5);
-    --shadow:
-      rgba(0, 0, 0, 0.4) 0 10px 15px -3px, rgba(0, 0, 0, 0.25) 0 4px 6px -2px;
-  }
-
-  #social .button-icon {
-    filter: invert(1) brightness(2);
-  }
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
 }
 
+html,
 body {
   margin: 0;
 }
 
-#root {
-  width: 1126px;
-  max-width: 100%;
-  margin: 0 auto;
-  text-align: center;
-  border-inline: 1px solid var(--border);
-  min-height: 100svh;
-  display: flex;
-  flex-direction: column;
-  box-sizing: border-box;
+body {
+  font-family: var(--sans);
+  font-size: 15px;
+  line-height: 1.5;
+  color: var(--ink-soft);
+  background-color: var(--paper);
+  /* subtle paper grain so the background isn't a flat fill */
+  background-image:
+    radial-gradient(rgba(124, 29, 34, 0.04) 1px, transparent 1px),
+    radial-gradient(rgba(28, 21, 15, 0.03) 1px, transparent 1px);
+  background-size: 22px 22px, 22px 22px;
+  background-position: 0 0, 11px 11px;
 }
 
-h1,
-h2 {
-  font-family: var(--heading);
+h1, h2, h3, h4 {
+  font-family: var(--serif);
+  color: var(--ink);
   font-weight: 500;
-  color: var(--text-h);
-}
-
-h1 {
-  font-size: 56px;
-  letter-spacing: -1.68px;
-  margin: 32px 0;
-  @media (max-width: 1024px) {
-    font-size: 36px;
-    margin: 20px 0;
-  }
-}
-h2 {
-  font-size: 24px;
-  line-height: 118%;
-  letter-spacing: -0.24px;
-  margin: 0 0 8px;
-  @media (max-width: 1024px) {
-    font-size: 20px;
-  }
-}
-p {
   margin: 0;
 }
 
-code,
-.counter {
-  font-family: var(--mono);
-  display: inline-flex;
-  border-radius: 4px;
-  color: var(--text-h);
+p { margin: 0; }
+a { color: inherit; }
+
+button,
+input,
+select {
+  font-family: inherit;
+  font-size: inherit;
+  color: inherit;
 }
 
 code {
-  font-size: 15px;
-  line-height: 135%;
-  padding: 4px 8px;
-  background: var(--code-bg);
+  font-family: ui-monospace, "SFMono-Regular", Consolas, monospace;
+  font-size: 0.82em;
+  color: var(--accent);
+  background: var(--accent-bg);
+  padding: 1px 6px;
+  border-radius: 5px;
+}
+
+kbd {
+  font-family: var(--sans);
+  font-size: 11px;
+  border: 1px solid var(--line);
+  border-bottom-width: 2px;
+  border-radius: 5px;
+  padding: 1px 6px;
+  background: var(--paper-2);
+  color: var(--ink-soft);
+}
+
+::selection {
+  background: var(--accent);
+  color: #fff;
 }

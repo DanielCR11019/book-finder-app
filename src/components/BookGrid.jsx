@@ -1,18 +1,24 @@
 import BookCard from "./BookCard";
 
-function BookGrid({ books }) {
-  if (books.length === 0) {
+function BookGrid({ books, showAvailability, onSelect }) {
+  if (!books.length) {
     return (
-      <p className="empty-message">
-        No hay libros para mostrar. Realiza una búsqueda.
-      </p>
+      <div className="empty">
+        <p className="empty__title">No works to show</p>
+        <p className="empty__hint">Try another term or relax the filters.</p>
+      </div>
     );
   }
 
   return (
-    <section className="book-grid">
+    <section className="grid">
       {books.map((book) => (
-        <BookCard key={book.key} book={book} />
+        <BookCard
+          key={book.key}
+          book={book}
+          showAvailability={showAvailability}
+          onSelect={onSelect}
+        />
       ))}
     </section>
   );
